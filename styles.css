@@ -125,7 +125,7 @@ html{scroll-behavior:smooth}
   font-size:0.95rem;
   font-weight:600;
   cursor:pointer;
-  transition:background 0.15s;
+  transition:background 0.15s,transform 180ms cubic-bezier(.2,.8,.2,1);
   margin-top:1.25rem;
   min-width:220px;
   text-align:center;

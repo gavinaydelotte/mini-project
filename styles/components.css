@@ -17,16 +17,22 @@
 
 /* Dynamic hover/interaction for buttons (scale and lift) */
 @media (hover: hover) and (pointer: fine) {
-	.tab, .btn, .panel-close {
+	.tab, .btn, .panel-close, .nav a, .brand {
 		transition:transform 180ms cubic-bezier(.2,.8,.2,1), box-shadow 180ms ease;
 		will-change: transform;
 	}
 
-	.tab:hover, .btn:hover {
+	.brand:hover { transform: scale(1.08); }
+	.brand:active { transform: scale(0.97); }
+
+	.tab:hover, .btn:hover, .btn-primary:hover {
 		transform: translateY(-3px) scale(1.04);
 	}
 
-	.tab:active, .btn:active { transform: translateY(-1px) scale(0.995); }
+	.nav a:hover { transform: scale(1.08); }
+	.nav a:active { transform: scale(0.97); }
+
+	.tab:active, .btn:active, .btn-primary:active { transform: translateY(-1px) scale(0.995); }
 
 	.panel-close:hover { transform: scale(1.08); }
 	.panel-close:active { transform: scale(0.98); }

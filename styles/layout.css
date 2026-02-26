@@ -4,7 +4,7 @@
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0}
 .brand{font-weight:700;color:var(--accent);text-decoration:none}
 .nav{list-style:none;margin:0;padding:0;display:flex;gap:1rem}
-.nav a{color:#153e4d;text-decoration:none}
+.nav a{color:#153e4d;text-decoration:none;display:inline-block}
 .hero{padding:2rem 1rem;text-align:left}
 .lead{color:var(--muted);margin-top:0.25rem}
 .listings-section{padding:1rem 0 3rem}

@@ -8,8 +8,7 @@
 
   // Sticky header shadow
   function onScroll(){
-    if(window.scrollY > 10) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
+    header.classList.toggle('scrolled', window.scrollY > 10);
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
