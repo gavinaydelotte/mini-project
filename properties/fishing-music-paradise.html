@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>"Fishing and Music Paradise" in Downtown Ft. Pierce, FL — Tidemark Vacation Rentals</title>
+  <meta name="description" content="2 bed, 2 bath vacation rental in Downtown Ft. Pierce, FL. Sleeps 6. Pet-friendly, bikes provided, boat trailer parking. Beach, Fishing, Music Paradise!">
+  <link rel="stylesheet" href="../styles/base.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <link rel="stylesheet" href="../styles/animations.css">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" href="../images/logo.png" type="image/png">
+  <style>
+    /* Property hero */
+    .prop-hero {
+      position: relative;
+      height: 420px;
+      overflow: hidden;
+      margin-top: 60px;
+    }
+    .prop-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .prop-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(2,18,23,0.15) 0%, rgba(2,18,23,0.6) 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 2rem;
+    }
+    .prop-hero-overlay h1 {
+      color: #fff;
+      margin: 0;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      line-height: 1.2;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    /* Specs bar */
+    .prop-specs {
+      background: #fff;
+      border-bottom: 1px solid rgba(14,61,77,0.08);
+      padding: 1.25rem 0;
+    }
+    .prop-specs .container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem 2rem;
+    }
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    .spec-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .spec-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .spec-divider {
+      width: 1px;
+      height: 2.5rem;
+      background: rgba(14,61,77,0.12);
+    }
+    .prop-tagline {
+      margin-left: auto;
+      font-style: italic;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .prop-cta {
+      display: inline-block;
+      padding: 0.65rem 1.4rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+    .prop-cta:hover { opacity: 0.88; }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2,18,23,0.92);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: var(--radius);
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+      z-index: 2001;
+    }
+    .lightbox-close:hover { opacity: 0.7; }
+
+    /* Photo scroll strip */
+    .photo-scroll-section {
+      padding: 2rem 0;
+      background: #f0f8fb;
+      border-top: 1px solid rgba(14,61,77,0.07);
+    }
+    .photo-scroll-section h2 { margin: 0 0 1rem; padding: 0 1rem; max-width: var(--container); margin-left: auto; margin-right: auto; }
+    .photo-scroll-track {
+      display: flex;
+      gap: 0.6rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 1rem 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) transparent;
+    }
+    .photo-scroll-track::-webkit-scrollbar { height: 5px; }
+    .photo-scroll-track::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+    .photo-scroll-item {
+      flex: 0 0 auto;
+      width: 300px;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: var(--radius);
+      scroll-snap-align: start;
+    }
+    .photo-scroll-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .photo-scroll-item:hover img { transform: scale(1.04); }
+    @media(min-width:640px){
+      .photo-scroll-item { width: 380px; }
+    }
+
+    /* Details + amenities layout */
+    .prop-body {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+    @media(min-width:720px){
+      .prop-body { grid-template-columns: 1fr 340px; }
+    }
+
+    /* Amenities */
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .amenity-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 0.75rem;
+      background: #f0f8fb;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+    .amenity-item::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Sidebar */
+    .prop-sidebar {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 6px 18px rgba(13,38,47,0.08);
+      padding: 1.5rem;
+      height: fit-content;
+      position: sticky;
+      top: 80px;
+    }
+    .prop-sidebar h3 { margin-top: 0; }
+    .sidebar-detail {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(14,61,77,0.06);
+      font-size: 0.92rem;
+    }
+    .sidebar-detail:last-of-type { border-bottom: none; }
+    .sidebar-detail .label { color: var(--muted); }
+    .sidebar-cta {
+      margin-top: 1.25rem;
+      display: block;
+      text-align: center;
+      padding: 0.75rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .sidebar-phone {
+      display: block;
+      text-align: center;
+      margin-top: 0.75rem;
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    /* Contact section */
+    .contact-section {
+      background: #fff;
+      border-top: 1px solid rgba(14,61,77,0.07);
+      padding: 2.5rem 2rem;
+    }
+    .contact-section h2 { margin-top: 0; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      padding: 0.6rem 0.75rem;
+      border: 1px solid #d7e3e9;
+      border-radius: 6px;
+      font: inherit;
+      font-size: 0.95rem;
+      width: 100%;
+    }
+    .contact-form textarea { resize: vertical; min-height: 110px; }
+    .contact-form button {
+      padding: 0.7rem 1.5rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      align-self: flex-start;
+    }
+    .contact-info p { margin: 0.4rem 0; }
+    .contact-info a { color: var(--accent); }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <nav class="nav-left" aria-label="Primary navigation">
+        <ul class="nav">
+          <li><a href="../listings.html">Listings</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../news.html">News &amp; Resources</a></li>
+        </ul>
+      </nav>
+      <a class="brand" href="../index.html">
+        <img src="../images/logo.png" alt="Tidemark Vacation Rentals" class="logo">
+      </a>
+      <nav class="nav-right" aria-label="Secondary navigation">
+        <ul class="nav">
+          <li><a href="../contact.html">Contact</a></li>
+          <li><a href="https://tidemarkpropertygroup.com" target="_blank" rel="noopener noreferrer">Property Group</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <div class="prop-hero">
+      <img src="../images/fishingmusicparadise.avif" alt="Fishing and Music Paradise in Downtown Ft. Pierce, FL">
+      <div class="prop-hero-overlay">
+        <h1>"Fishing and Music Paradise"<br>in Downtown Ft. Pierce, FL</h1>
+      </div>
+    </div>
+
+    <!-- Specs bar -->
+    <div class="prop-specs">
+      <div class="container">
+        <div class="spec-item">
+          <span class="spec-value">2</span>
+          <span class="spec-label">Bedrooms</span>
+        </div>
+        <div class="spec-divider" aria-hidden="true"></div>
+        <div class="spec-item">
+          <span class="spec-value">2</span>
+          <span class="spec-label">Bathrooms</span>
+        </div>
+        <div class="spec-divider" aria-hidden="true"></div>
+        <div class="spec-item">
+          <span class="spec-value">6</span>
+          <span class="spec-label">Guests</span>
+        </div>
+        <div class="spec-divider" aria-hidden="true"></div>
+        <div class="spec-item">
+          <span class="spec-value">3</span>
+          <span class="spec-label">Night Min.</span>
+        </div>
+        <p class="prop-tagline">Beach, Fishing, Music Paradise!</p>
+        <a href="tel:7722631016" class="prop-cta">Contact Us For Availability</a>
+      </div>
+    </div>
+
+    <!-- Body: description + amenities + sidebar -->
+    <div class="container">
+      <a href="../listings.html" class="back-link">&#8592; Back to Listings</a>
+      <div class="prop-body">
+
+        <!-- Left column -->
+        <div>
+          <h2>About This Property</h2>
+          <p>Experience the best of Fort Pierce from this beautifully updated historical home right in the heart of downtown. Whether you're here to cast a line at the boat launch minutes away, catch live music at a nearby venue, or simply explore the vibrant local scene — this property puts it all within reach.</p>
+          <p>The home blends classic character with modern amenities, making it equally perfect for a relaxing retreat or an adventure-packed stay. Bikes are provided so you can explore the neighborhood at your own pace, and the property accommodates boat trailer parking for those bringing their own watercraft.</p>
+
+          <h2>Amenities</h2>
+          <ul class="amenities-grid" style="list-style:none;padding:0;margin:0">
+            <li class="amenity-item">5 Minutes to Downtown</li>
+            <li class="amenity-item">Bikes Provided</li>
+            <li class="amenity-item">Minutes to Boat Launch</li>
+            <li class="amenity-item">Live Music Nearby</li>
+            <li class="amenity-item">Boat Trailer Parking</li>
+            <li class="amenity-item">Pets Allowed</li>
+            <li class="amenity-item">Historical Home</li>
+            <li class="amenity-item">Modern Amenities</li>
+          </ul>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="prop-sidebar">
+          <h3>Property Details</h3>
+          <div class="sidebar-detail">
+            <span class="label">Location</span>
+            <span>Downtown Ft. Pierce, FL</span>
+          </div>
+          <div class="sidebar-detail">
+            <span class="label">Bedrooms</span>
+            <span>2</span>
+          </div>
+          <div class="sidebar-detail">
+            <span class="label">Bathrooms</span>
+            <span>2</span>
+          </div>
+          <div class="sidebar-detail">
+            <span class="label">Sleeps</span>
+            <span>Up to 6 guests</span>
+          </div>
+          <div class="sidebar-detail">
+            <span class="label">Minimum Stay</span>
+            <span>3 nights</span>
+          </div>
+          <div class="sidebar-detail">
+            <span class="label">Pets</span>
+            <span>Allowed</span>
+          </div>
+          <a href="tel:7722631016" class="sidebar-cta">Contact Us For Availability</a>
+          <a href="tel:7722631016" class="sidebar-phone">(772) 263-1016</a>
+        </aside>
+
+      </div>
+    </div>
+
+    <!-- Photo scroll strip -->
+    <section class="photo-scroll-section">
+      <h2>More Photos</h2>
+      <div class="photo-scroll-track">
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/3da81e15-5974-4932-8233-89123f43db0a.jpeg.avif" alt="Property photo 1" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/addeaf5d-bffc-46b7-897d-0bb1ed684378.jpeg.avif" alt="Property photo 2" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/b0d18aea-caa6-470a-bc52-655e47ec378a.jpeg.avif" alt="Property photo 3" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/c254febe-d7db-4bf1-b645-8ff768723bb0.jpeg.avif" alt="Property photo 4" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/c928a996-a50a-4526-b436-7f78e007c193.jpeg.avif" alt="Property photo 5" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/dd9bdc6f-58bc-4374-a9ce-4852196c99b8.jpeg.avif" alt="Property photo 6" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/dd6883e4-5cb5-4d30-b78f-1c6e25e70b8a.jpeg.avif" alt="Property photo 7" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/dd756912-88a4-4494-b808-6ed586c61057.jpeg.avif" alt="Property photo 8" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/ddfaeecc-206e-4abd-a1be-65bcbb9c583f.jpeg.avif" alt="Property photo 9" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/fa0427fb-b74a-4696-989b-6a6b86a75b5b.jpeg.avif" alt="Property photo 10" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/fcd13d72-b92b-48d3-a574-6ab91510b764.jpeg.avif" alt="Property photo 11" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/1f98411a-b688-4633-8223-0be445b16e04.jpeg.avif" alt="Property photo 12" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/2c851834-c19a-41a6-88d1-717bf3ed25f1.jpeg.avif" alt="Property photo 13" loading="lazy">
+        </div>
+        <div class="photo-scroll-item">
+          <img src="https://tidemarkpropertygroup.com/wp-content/uploads/3b6aa409-44ef-4591-b3e8-873fdd5a0dba.jpeg.avif" alt="Property photo 14" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close photo">&#x2715;</button>
+      <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <!-- Contact section -->
+    <section class="contact-section">
+      <h2>Call (772) 263-1016 or Contact Us Today!</h2>
+      <div class="contact-grid">
+        <form class="contact-form" action="../contact.html" method="get">
+          <input type="text" name="name" placeholder="Name" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <input type="tel" name="phone" placeholder="Phone" required>
+          <textarea name="message" placeholder="Tell us how we can help — mention &quot;Fishing and Music Paradise&quot;"></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+        <div class="contact-info">
+          <p><strong>Tidemark Property Group</strong></p>
+          <p><a href="tel:7722631016">(772) 263-1016</a></p>
+          <p>309 SE Osceola Street, Suite 104<br>Stuart, FL 34994</p>
+          <p style="margin-top:1rem;color:var(--muted);font-size:0.9rem">Our team will get back to you with current availability and pricing information.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© TideMark Property Group — Stuart, FL</p>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', function () {
+      document.querySelector('.site-header').classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    document.querySelectorAll('.photo-scroll-item img').forEach(function (img) {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', function () {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightboxImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>
