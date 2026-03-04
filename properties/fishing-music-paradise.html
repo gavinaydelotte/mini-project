@@ -17,7 +17,7 @@
       position: relative;
       height: 420px;
       overflow: hidden;
-      margin-top: 60px;
+      margin-top: 0;
     }
     .prop-hero img {
       width: 100%;
@@ -247,6 +247,7 @@
       background: #fff;
       border-top: 1px solid rgba(14,61,77,0.07);
       padding: 2.5rem 2rem;
+      max-width: none;
     }
     .contact-section h2 { margin-top: 0; }
     .contact-grid {
@@ -284,6 +285,9 @@
     }
     .contact-info p { margin: 0.4rem 0; }
     .contact-info a { color: var(--accent); }
+    @media(max-width:640px){
+      .contact-grid { grid-template-columns: 1fr; }
+    }
 
     /* Back link */
     .back-link {
@@ -474,7 +478,7 @@
     <section class="contact-section">
       <h2>Call (772) 263-1016 or Contact Us Today!</h2>
       <div class="contact-grid">
-        <form class="contact-form" action="../contact.html" method="get">
+        <form class="contact-form" action="../contact.html" method="post">
           <input type="text" name="name" placeholder="Name" required>
           <input type="email" name="email" placeholder="Email" required>
           <input type="tel" name="phone" placeholder="Phone" required>
