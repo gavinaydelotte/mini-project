@@ -39,23 +39,9 @@
     <section class="hero container">
       <h1>Available Rentals</h1>
       <p class="lead">Showing curated results for Stuart, FL. Click a listing to view the original posting.</p>
-      <form class="search" role="search" aria-label="Search listings">
-        <label for="q" class="visually-hidden">Search listings</label>
-        <input id="q" name="q" type="search" placeholder="Search by neighborhood, feature, or name">
-        <select id="provider" aria-label="Provider filter">
-          <option value="all">All providers</option>
-          <option value="vrbo">VRBO</option>
-          <option value="airbnb">Airbnb</option>
-        </select>
-      </form>
     </section>
 
     <section class="container listings-section">
-      <div class="tabs" role="tablist" aria-label="View all listings tabs">
-        <button class="tab" type="button" data-target="panel-all-listings">All Listings</button>
-        <button class="tab" type="button" data-target="panel-all-vrbo">All VRBO</button>
-        <button class="tab" type="button" data-target="panel-all-airbnb">All Airbnb</button>
-      </div>
 
       <ul class="listings" id="listingsGrid">
         <!-- Listing 1: Fishing and Music Paradise -->
@@ -146,40 +132,6 @@
       </ul>
     </section>
 
-    <div id="tabOverlay" class="tab-overlay hidden" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="tab-panel" id="panel-all-listings" role="tabpanel" tabindex="0">
-        <button class="panel-close" aria-label="Close">✕</button>
-        <div class="container">
-          <h2>All Listings</h2>
-          <p class="muted">All listings for Stuart, FL.</p>
-          <ul class="listings-list">
-            <li class="muted">No listings yet.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="tab-panel hidden" id="panel-all-vrbo" role="tabpanel" tabindex="0">
-        <button class="panel-close" aria-label="Close">✕</button>
-        <div class="container">
-          <h2>All VRBO Listings</h2>
-          <p class="muted">All VRBO listings for Stuart, FL.</p>
-          <ul class="listings-list">
-            <li class="muted">No listings yet.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="tab-panel hidden" id="panel-all-airbnb" role="tabpanel" tabindex="0">
-        <button class="panel-close" aria-label="Close">✕</button>
-        <div class="container">
-          <h2>All Airbnb Listings</h2>
-          <p class="muted">All Airbnb listings for Stuart, FL.</p>
-          <ul class="listings-list">
-            <li class="muted">No listings yet.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
   </main>
 
   <div class="wave-divider" aria-hidden="true">
@@ -198,27 +150,6 @@
   <script src="scripts/main.js" defer></script>
   <script>
     // header scroll handled by main.js
-
-    (function(){
-      const q = document.getElementById('q');
-      const provider = document.getElementById('provider');
-      const grid = document.getElementById('listingsGrid');
-
-      function filter(){
-        const term = q.value.trim().toLowerCase();
-        const prov = provider.value;
-        Array.from(grid.querySelectorAll('.listing')).forEach(li => {
-          const title = li.querySelector('.title').textContent.toLowerCase();
-          const info = li.querySelector('.info').textContent.toLowerCase();
-          const matchesText = !term || title.includes(term) || info.includes(term);
-          const matchesProv = prov === 'all' || li.dataset.provider === prov;
-          li.style.display = (matchesText && matchesProv) ? '' : 'none';
-        });
-      }
-
-      q.addEventListener('input', filter);
-      provider.addEventListener('change', filter);
-    })();
 
     // Animated wave divider
     (function(){
