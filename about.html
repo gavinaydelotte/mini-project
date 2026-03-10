@@ -36,19 +36,22 @@
   </header>
 
   <main>
-    <section class="hero container">
-      <h1>About Us</h1>
-      <p class="lead">Connecting visitors with the best vacation rentals in Stuart, Florida.</p>
-    </section>
+    <div class="parallax-banner about-parallax-banner">
+      <img src="https://thumbs.dreamstime.com/b/sunset-over-gulf-mexico-caspersen-beach-venice-florida-rocky-shore-143947038.jpg" alt="Passage to the beach in Stuart, FL" class="parallax-bg about-parallax-bg">
+      <div class="about-banner-overlay">
+        <h1>About Me</h1>
+        <p class="lead">Connecting visitors with the best vacation rentals in Stuart, Florida.</p>
+      </div>
+    </div>
 
     <section class="container about">
       <p>Tidemark Vacation Rentals curates hand-picked VRBO and Airbnb properties across Stuart, FL and the surrounding Treasure Coast area. Our listings highlight waterfront homes, family-friendly cottages, and pet-friendly condos — all sourced from trusted platforms.</p>
       <p>This site provides quick links to verified postings so you can find and book your perfect getaway without the hassle of sifting through hundreds of results.</p>
-      <p>Stuart, FL sits along the St. Lucie River and is known as the "Sailfish Capital of the World." Whether you're after the beach, the waterway, or the charming downtown, there's a rental here for you.</p>
+      <p>Stuart, FL sits between the St. Lucie River, Indian River, and the Atlantic Ocean, and is known as the "Sailfish Capital of the World." Whether you're after the beach, the waterway, or the charming downtown, there's a rental here for you.</p>
     </section>
 
     <section class="container team-section">
-      <h2>Meet the Team</h2>
+      <h2>About Me</h2>
       <div class="profile-card">
         <img src="images/misty.jpeg" alt="Misty Aydelotte" class="profile-photo">
         <div class="profile-bio">
@@ -77,6 +80,21 @@
     window.addEventListener('scroll',function(){
       document.querySelector('.site-header').classList.toggle('scrolled',window.scrollY>140);
     },{passive:true});
+
+    // Parallax for about page banner
+    (function(){
+      var banner = document.querySelector('.about-parallax-banner');
+      if(!banner) return;
+      var bg = banner.querySelector('.about-parallax-bg');
+      function tick(){
+        var rect = banner.getBoundingClientRect();
+        var centerOffset = rect.top + rect.height / 2 - window.innerHeight / 2;
+        var shift = (centerOffset * -0.16).toFixed(1);
+        if(bg) bg.style.transform = 'translateY(' + shift + 'px)';
+      }
+      window.addEventListener('scroll', tick, {passive:true});
+      tick();
+    })();
 
     // Animated wave divider
     (function(){
