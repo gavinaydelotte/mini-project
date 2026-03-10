@@ -253,6 +253,9 @@ html{scroll-behavior:smooth}
   from{opacity:0}
   to{opacity:1}
 }
+.home-intro{padding-top:3.5rem;padding-bottom:3rem;max-width:760px;margin-left:auto;margin-right:auto;text-align:center}
+.home-intro-heading{font-size:clamp(1.2rem,2.8vw,1.65rem);line-height:1.45;color:#0d2e3f;margin:0 0 1.4rem;font-weight:700}
+.home-intro-body{color:#2b4a58;line-height:1.9;margin:0;font-size:1.02rem}
 .home-listings-scroll-wrap{background:#fff;padding:1.5rem 0 2rem}
 .home-listings-scroll{
   display:flex;gap:1rem;
